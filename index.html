@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เตรียมสอบ วิชาวิจัยทางการบริหารการศึกษา</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Prompt', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#1e40af', // blue-800
+                        secondary: '#0369a1', // sky-700
+                        accent: '#f59e0b', // amber-500
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Prompt', sans-serif; background-color: #f3f4f6; }
+        .tab-active { border-bottom: 4px solid #1e40af; color: #1e40af; font-weight: 600; }
+        .tab-inactive { border-bottom: 4px solid transparent; color: #6b7280; }
+        .tab-inactive:hover { color: #374151; border-bottom: 4px solid #d1d5db; }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        .fade-in { animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body class="bg-gray-100 min-h-screen">
+
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <i class="fas fa-graduation-cap text-3xl text-primary mr-3"></i>
+                    <span class="font-bold text-xl text-gray-800">วิจัยทางการบริหารการศึกษา (ป.โท)</span>
+                </div>
+            </div>
+            <div class="flex space-x-8 mt-2">
+                <button id="btn-tab-review" class="tab-active pb-3 px-2 text-lg transition-colors duration-200" onclick="switchTab('review')">
+                    <i class="fas fa-book-open mr-2"></i>ทบทวนเนื้อหา
+                </button>
+                <button id="btn-tab-quiz" class="tab-inactive pb-3 px-2 text-lg transition-colors duration-200" onclick="switchTab('quiz')">
+                    <i class="fas fa-tasks mr-2"></i>ทำแบบทดสอบ
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        
+        <!-- ================= REVIEW SECTION ================= -->
+        <div id="section-review" class="fade-in space-y-6">
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+                <h2 class="text-2xl font-bold text-primary mb-4 border-b pb-2"><i class="fas fa-layer-group mr-2"></i>1. ประเภทของการวิจัย (13 ประเภท)</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-gray-700" id="research-types-container">
+                    <!-- Populated by JS -->
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+                <h2 class="text-2xl font-bold text-secondary mb-4 border-b pb-2"><i class="fas fa-sitemap mr-2"></i>2. กรอบแนวคิดตัวแปรทางการบริหาร</h2>
+                <div class="space-y-4">
+                    <div class="bg-blue-50 p-4 rounded-lg">
+                        <h3 class="font-bold text-lg mb-2">2.1 ทฤษฎีระบบ (System Theory)</h3>
+                        <ul class="list-disc pl-5 space-y-1">
+                            <li><strong>ปัจจัยนำเข้า (INPUT):</strong> งบประมาณ บุคลากร วัสดุอุปกรณ์ การบริหารจัดการ (4M)</li>
+                            <li><strong>กระบวนการ (PROCESS):</strong> วิธีการบริหาร การเรียนการสอน การดำเนินงานต่างๆ</li>
+                            <li><strong>ผลผลิต (OUTPUT/OUTCOME):</strong> ผลสัมฤทธิ์ คุณภาพผู้เรียน ความพึงพอใจ</li>
+                        </ul>
+                    </div>
+                    <div class="bg-green-50 p-4 rounded-lg">
+                        <h3 class="font-bold text-lg mb-2">2.2 กระบวนการบริหาร</h3>
+                        <ul class="list-disc pl-5 space-y-1">
+                            <li><strong>POSDCoRB:</strong> Planning, Organizing, Staffing, Directing, Coordinating, Reporting, Budgeting</li>
+                            <li><strong>PDCA:</strong> Plan, Do, Check, Act (วงจรเดมิ่ง เน้นการพัฒนาคุณภาพ)</li>
+                        </ul>
+                    </div>
+                    <div class="bg-amber-50 p-4 rounded-lg">
+                        <h3 class="font-bold text-lg mb-2">2.3 โครงสร้างองค์การ (4 ฝ่ายหลักในโรงเรียน)</h3>
+                        <ul class="list-disc pl-5 space-y-1">
+                            <li><strong>Academic Affairs:</strong> งานวิชาการ (หัวใจของโรงเรียน)</li>
+                            <li><strong>Business/Personnel Affairs:</strong> งานธุรการ บุคคล งบประมาณ</li>
+                            <li><strong>Student Affairs:</strong> งานกิจการนักเรียน</li>
+                            <li><strong>Supportive/General Affairs:</strong> งานบริหารทั่วไป อาคารสถานที่</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-gray-200">
+                <h2 class="text-2xl font-bold text-purple-700 mb-4 border-b pb-2"><i class="fas fa-bullseye mr-2"></i>3. วัตถุประสงค์ในการวิจัย</h2>
+                <div class="space-y-3">
+                    <p>คือความมุ่งหวังของผู้วิจัยว่า <strong>"ต้องการจะได้คำตอบอะไร จากการวิจัย"</strong> แบ่งเป็น 2 ประเภทซึ่งควรระบุทั้งคู่คือ:</p>
+                    <ul class="list-disc pl-5 space-y-2">
+                        <li><strong>วัตถุประสงค์ทั่วไป:</strong> บอกความมุ่งหวังกว้างๆ 1 ประโยค (เอาชื่อเรื่องมาเติมคำว่า "เพื่อ..." หรือ "เพื่อศึกษา...") <br><em>ตัวอย่าง: เพื่อศึกษาประสิทธิผลการบริหารงานวิชาการของโรงเรียนในสังกัดเทศบาลนครหาดใหญ่</em></li>
+                        <li><strong>วัตถุประสงค์เฉพาะ:</strong> บอกความมุ่งหวังประเด็นย่อยๆ (ล้อตามสมมติฐานหรือตัวแปรที่ศึกษา)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================= QUIZ SECTION ================= -->
+        <div id="section-quiz" class="hidden fade-in space-y-8">
+            
+            <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded shadow-sm mb-6">
+                <p class="font-bold">คำชี้แจงการทำแบบทดสอบ:</p>
+                <p>คลิกเลือกคำตอบที่คิดว่าถูกต้อง ระบบจะตรวจให้ทันทีและแสดงคำอธิบายด้านล่างข้อนั้นๆ (ไม่ต้องกดส่ง สามารถทำข้ามข้อได้)</p>
+            </div>
+
+            <!-- MCQ Section -->
+            <div>
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-gray-300 pb-2">ปรนัย (Multiple Choice) - 50 ข้อ</h2>
+                <div id="mcq-container" class="space-y-6">
+                    <!-- MCQ Items populated by JS -->
+                </div>
+            </div>
+
+            <!-- Essay Section -->
+            <div class="mt-12">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4 border-b-2 border-gray-300 pb-2">อัตนัย (Essay) - 5 ข้อ (เก็งข้อสอบ)</h2>
+                <div id="essay-container" class="space-y-6">
+                    <!-- Essay Items populated by JS -->
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+
+    <script>
+        /* ---------------- DATA DEFINITIONS ---------------- */
+        const researchTypes = [
+            "(1) การวิจัยเชิงประวัติศาสตร์ (Historical)", "(2) การวิจัยเชิงบรรยาย (Descriptive)", 
+            "(3) การวิจัยเชิงทดลองที่แท้จริง (Experimental)", "(4) การวิจัยเชิงกึ่งทดลอง (Quasi-experimental)",
+            "(5) การวิจัยเชิงเปรียบเทียบหาสาเหตุ/ย้อนรอย (Causal-Comparative / Ex post facto)", "(6) การวิจัยเชิงพัฒนาการ (Developmental)",
+            "(7) การวิจัยเชิงปฏิบัติการ (Action Research)", "(8) การวิจัยเชิงประเมิน (Evaluation)",
+            "(9) การวิจัยเชิงสหสัมพันธ์ (Correlational)", "(10) การวิจัยเชิงการศึกษากรณีและภาคสนาม (Case and Field Study)",
+            "(11) การวิจัยอนาคต (Futures Research)", "(12) การวิจัยเชิงคุณภาพ (Qualitative)",
+            "(13) การวิจัยเชิงพยากรณ์ (Predictive)"
+        ];
+
+        // Generate 50 MCQ Questions based on the document provided
+        const mcqData = [
+            // Part 1: ประเภทการวิจัย (1-15)
+            {
+                q: "หากผู้อำนวยการโรงเรียนต้องการแก้ปัญหาเด็กอ่านไม่ออกในภาคเรียนนี้โดยให้ครูสร้างนวัตกรรมมาใช้ทันที ควรใช้การวิจัยประเภทใด?",
+                opts: ["การวิจัยเชิงประเมิน (Evaluation)", "การวิจัยเชิงปฏิบัติการ (Action Research)", "การวิจัยอนาคต (Futures)", "การวิจัยเชิงประวัติศาสตร์ (Historical)"],
+                ans: 1, exp: "ถูกต้อง! Action Research หรือวิจัยปฏิบัติการ มุ่งแก้ปัญหาเฉพาะหน้าที่เกิดขึ้นในการปฏิบัติงานจริง ณ เวลานั้น"
+            },
+            {
+                q: "การวิจัยประเภทใดที่มุ่งศึกษาเหตุการณ์ที่เกิดขึ้นไปแล้วในอดีต เพื่อนำมาเป็นบทเรียนในปัจจุบัน?",
+                opts: ["การวิจัยเชิงพยากรณ์", "การวิจัยเชิงสหสัมพันธ์", "การวิจัยเชิงประวัติศาสตร์", "การวิจัยเชิงคุณภาพ"],
+                ans: 2, exp: "ถูกต้อง! การวิจัยเชิงประวัติศาสตร์ (Historical Research) ศึกษาอดีตเพื่อเข้าใจปัจจุบัน"
+            },
+            {
+                q: "ข้อใดคือจุดประสงค์หลักของการวิจัยเชิงประเมิน (Evaluation Research)?",
+                opts: ["เพื่อสร้างทฤษฎีใหม่ทางการบริหาร", "เพื่อตัดสินคุณค่าของโครงการหรือนโยบายว่าควรทำต่อหรือยกเลิก", "เพื่อหาความสัมพันธ์ระหว่างตัวแปรสองตัว", "เพื่อคาดการณ์จำนวนนักเรียนในอีก 10 ปีข้างหน้า"],
+                ans: 1, exp: "ถูกต้อง! การวิจัยเชิงประเมินใช้เพื่อตัดสินคุณค่า (Value Judgment) ของโครงการ นโยบาย หรือหลักสูตร"
+            },
+            {
+                q: "หากต้องการศึกษาความสัมพันธ์ระหว่าง 'ภาวะผู้นำของผู้บริหาร' กับ 'ความพึงพอใจในการทำงานของครู' ควรใช้วิจัยประเภทใด?",
+                opts: ["Correlational Research", "Experimental Research", "Historical Research", "Developmental Research"],
+                ans: 0, exp: "ถูกต้อง! การวิจัยเชิงสหสัมพันธ์ (Correlational) มุ่งหาความสัมพันธ์ระหว่างตัวแปรว่าแปรตามหรือแปรผกผันกันอย่างไร"
+            },
+            {
+                q: "การวิจัยที่มุ่งศึกษาเจาะลึกเฉพาะโรงเรียนใดโรงเรียนหนึ่ง หรือบุคคลใดบุคคลหนึ่งอย่างละเอียด จัดเป็นการวิจัยประเภทใด?",
+                opts: ["Case Study Research", "Action Research", "Survey Research", "Predictive Research"],
+                ans: 0, exp: "ถูกต้อง! การศึกษากรณี (Case Study) เป็นการศึกษาเชิงลึกในหน่วยใดหน่วยหนึ่งเฉพาะเจาะจง"
+            },
+            {
+                q: "เทคนิค Delphi Technique มักถูกนำมาใช้ในการวิจัยประเภทใดมากที่สุด?",
+                opts: ["การวิจัยเชิงคุณภาพ", "การวิจัยเชิงพยากรณ์และอนาคต", "การวิจัยเชิงทดลอง", "การวิจัยเชิงประเมิน"],
+                ans: 1, exp: "ถูกต้อง! Delphi Technique เป็นการรวบรวมความคิดเห็นของผู้เชี่ยวชาญเพื่อใช้พยากรณ์ภาพอนาคต (Futures Research)"
+            },
+            {
+                q: "ข้อใดคือความแตกต่างสำคัญระหว่าง Experimental Research และ Quasi-experimental Research?",
+                opts: ["ขนาดของกลุ่มตัวอย่าง", "การใช้สถิติวิเคราะห์", "การสุ่มตัวอย่างเข้ากลุ่มทดลอง (Random Assignment)", "ระยะเวลาในการวิจัย"],
+                ans: 2, exp: "ถูกต้อง! กึ่งทดลอง (Quasi) มักใช้บริบทจริงในโรงเรียนที่ไม่สามารถสุ่มเด็กเข้าชั้นเรียนใหม่ได้ (No Random Assignment) ต่างจากการทดลองแท้"
+            },
+            {
+                q: "ถ้าวิจัยเรื่อง 'ความก้าวหน้าทางวิชาการของนักเรียนตั้งแต่ ป.1 ถึง ป.6' เป็นการวิจัยประเภทใด?",
+                opts: ["Developmental Research", "Evaluation Research", "Causal-Comparative", "Action Research"],
+                ans: 0, exp: "ถูกต้อง! การวิจัยเชิงพัฒนาการ (Developmental) ศึกษาการเปลี่ยนแปลงที่เกิดขึ้นตามกาลเวลาที่ผ่านไป"
+            },
+            {
+                q: "Ex post facto Research หรือการวิจัยเชิงเปรียบเทียบหาสาเหตุ มีลักษณะเด่นอย่างไร?",
+                opts: ["ควบคุมตัวแปรแทรกซ้อนได้ 100%", "ผู้วิจัยไม่สามารถจัดกระทำ (Manipulate) ตัวแปรอิสระได้ เพราะเหตุการณ์เกิดไปแล้ว", "ต้องใช้กลุ่มตัวอย่างจำนวนมากเสมอ", "ใช้สำหรับการสร้างนวัตกรรมใหม่เท่านั้น"],
+                ans: 1, exp: "ถูกต้อง! ย้อนรอยศึกษา (Ex post facto) เหตุการณ์เกิดขึ้นไปแล้ว ผู้วิจัยควบคุมตัวแปรอิสระไม่ได้ ได้แต่สืบย้อนหาสาเหตุ"
+            },
+            {
+                q: "งานวิจัยเรื่อง 'แนวโน้มการจัดการศึกษาในทศวรรษหน้า' จัดเป็นการวิจัยประเภทใด?",
+                opts: ["Historical Research", "Futures Research", "Evaluation Research", "Quasi-experimental Research"],
+                ans: 1, exp: "ถูกต้อง! การศึกษาแนวโน้มในอนาคต คือ Futures Research"
+            },
+            {
+                q: "ข้อใดคือลักษณะสำคัญของการวิจัยเชิงคุณภาพ (Qualitative Research)?",
+                opts: ["เน้นการใช้สถิติขั้นสูงวิเคราะห์ข้อมูล", "ใช้แบบสอบถาม (Questionnaire) เป็นเครื่องมือหลัก", "เน้นการตีความหมายจากบริบท การสังเกต และการสัมภาษณ์เจาะลึก", "ต้องการกลุ่มตัวอย่างขนาดใหญ่เพื่ออ้างอิงประชากร"],
+                ans: 2, exp: "ถูกต้อง! เชิงคุณภาพเน้นข้อมูลเชิงตัวอักษร การตีความหมาย และการทำความเข้าใจปรากฏการณ์ในบริบทธรรมชาติ"
+            },
+            {
+                q: "หากต้องการพยากรณ์ผลการสอบ O-NET ของนักเรียนโดยใช้เกรดเฉลี่ยสะสมเป็นตัวทำนาย ควรใช้วิจัยประเภทใด?",
+                opts: ["Predictive Research", "Action Research", "Case Study", "Historical Research"],
+                ans: 0, exp: "ถูกต้อง! Predictive Research (เชิงพยากรณ์) ใช้ตัวแปรหนึ่ง (Predictor) ไปทำนายอีกตัวแปรหนึ่ง (Criterion)"
+            },
+            {
+                q: "ในการบริหารการศึกษาหลักสูตรและการสอน มักนิยมใช้การวิจัยประเภทใดเพื่อปรับปรุงการสอนของครู?",
+                opts: ["Historical Research", "Action Research", "Correlational Research", "Futures Research"],
+                ans: 1, exp: "ถูกต้อง! Action Research (วิจัยในชั้นเรียน/ปฏิบัติการ) ถูกใช้มากที่สุดเพื่อปรับปรุงการเรียนการสอนโดยตรง"
+            },
+            {
+                q: "การลงพื้นที่เพื่อสังเกตพฤติกรรมวัฒนธรรมองค์การในโรงเรียน จัดเป็นการวิจัยประเภทใด?",
+                opts: ["Field Study Research", "Causal-Comparative", "Predictive", "Experimental"],
+                ans: 0, exp: "ถูกต้อง! Field Study (การศึกษาภาคสนาม) เป็นการลงไปศึกษาในพื้นที่จริงตามธรรมชาติ"
+            },
+            {
+                q: "การทดสอบประสิทธิภาพของรูปแบบการบริหารที่สร้างขึ้นใหม่ จัดอยู่ในประเภทใด?",
+                opts: ["Developmental Research (R&D)", "Historical", "Correlational", "Case Study"],
+                ans: 0, exp: "ถูกต้อง! การสร้างและหาประสิทธิภาพ มักอยู่ในกระบวนการวิจัยและพัฒนา (R&D / Developmental)"
+            },
+
+            // Part 2: ระบบบริหาร (System Theory) (16-20)
+            {
+                q: "ตามแนวคิดทฤษฎีระบบ (System Theory) 'งบประมาณ และ วัสดุอุปกรณ์' จัดอยู่ในส่วนใด?",
+                opts: ["PROCESS", "INPUT", "OUTPUT", "FEEDBACK"],
+                ans: 1, exp: "ถูกต้อง! งบประมาณ บุคลากร วัสดุ (4M) จัดเป็นปัจจัยนำเข้า (INPUT) ของระบบการบริหาร"
+            },
+            {
+                q: "กระบวนการเรียนการสอน เทคนิคการบริหาร จัดอยู่ในส่วนใดของระบบ?",
+                opts: ["INPUT", "PROCESS", "OUTPUT", "IMPACT"],
+                ans: 1, exp: "ถูกต้อง! วิธีการ กระบวนการทำงาน การจัดการเรียนการสอน จัดเป็น PROCESS"
+            },
+            {
+                q: "'ผลสัมฤทธิ์ทางการเรียนของนักเรียนที่สูงขึ้น' จัดอยู่ในองค์ประกอบใดของระบบ?",
+                opts: ["INPUT", "PROCESS", "OUT PUT", "ENVIRONMENT"],
+                ans: 2, exp: "ถูกต้อง! ผลผลิต หรือ OUT PUT คือผลที่เกิดจากกระบวนการ ซึ่งก็คือตัวนักเรียนหรือผลสัมฤทธิ์"
+            },
+            {
+                q: "หากผู้วิจัยกำหนดให้ 'คุณภาพผู้เรียน' เป็นตัวแปรตาม ตัวแปรนี้อยู่ในส่วนใดของ System Approach?",
+                opts: ["INPUT", "PROCESS", "OUTPUT", "ไม่มีข้อถูก"],
+                ans: 2, exp: "ถูกต้อง! คุณภาพผู้เรียนคือผลผลิต (OUTPUT) ซึ่งมักถูกตั้งเป็นตัวแปรตามในการวิจัยทางการศึกษา"
+            },
+            {
+                q: "ในการวิจัยเพื่อประเมินโครงการ ส่วนของ 'ความพึงพอใจของผู้ปกครอง' จัดเป็นอะไร?",
+                opts: ["INPUT", "PROCESS", "OUTPUT/OUTCOME", "CONTEXT"],
+                ans: 2, exp: "ถูกต้อง! ความพึงพอใจเป็นผลลัพธ์ที่เกิดขึ้น (Outcome/Output) หลังจากการดำเนินโครงการ"
+            },
+
+            // Part 3: กระบวนการบริหาร POSDCoRB & PDCA (21-30)
+            {
+                q: "ตัวอักษร 'P' ใน POSDCoRB หมายถึงอะไร?",
+                opts: ["Personnel (งานบุคคล)", "Planning (การวางแผน)", "Process (กระบวนการ)", "Public (งานมวลชน)"],
+                ans: 1, exp: "ถูกต้อง! P = Planning คือ การวางแผน"
+            },
+            {
+                q: "ข้อใดคือความหมายของตัวอักษร 'O' ใน POSDCoRB?",
+                opts: ["Organizing (การจัดองค์การ)", "Operating (การปฏิบัติการ)", "Objective (วัตถุประสงค์)", "Outcome (ผลลัพธ์)"],
+                ans: 0, exp: "ถูกต้อง! O = Organizing คือ การจัดโครงสร้างองค์การและการแบ่งงาน"
+            },
+            {
+                q: "การจัดคนเข้าทำงาน (Staffing) ตรงกับตัวอักษรใดใน POSDCoRB?",
+                opts: ["S", "D", "Co", "R"],
+                ans: 0, exp: "ถูกต้อง! S = Staffing คือ การบริหารงานบุคคล การจัดคนให้ตรงกับงาน"
+            },
+            {
+                q: "ตัวอักษร 'D' ใน POSDCoRB หมายถึงหน้าที่ใดของผู้บริหาร?",
+                opts: ["Doing (การลงมือทำ)", "Developing (การพัฒนา)", "Directing (การสั่งการ/อำนวยการ)", "Documenting (การทำเอกสาร)"],
+                ans: 2, exp: "ถูกต้อง! D = Directing คือ การสั่งการ การอำนวยการ การเป็นผู้นำ"
+            },
+            {
+                q: "การประสานงาน เพื่อให้ทุกฝ่ายทำงานสอดคล้องกัน ตรงกับตัวอักษรใดใน POSDCoRB?",
+                opts: ["P", "O", "Co", "B"],
+                ans: 2, exp: "ถูกต้อง! Co = Coordinating คือ การประสานงาน"
+            },
+            {
+                q: "ตัวอักษร 'R' และ 'B' ใน POSDCoRB หมายถึงสิ่งใดตามลำดับ?",
+                opts: ["Reporting และ Budgeting", "Recording และ Buying", "Researching และ Building", "Reading และ Brainstorming"],
+                ans: 0, exp: "ถูกต้อง! R = Reporting (การรายงานผล) และ B = Budgeting (การงบประมาณ)"
+            },
+            {
+                q: "วงจร PDCA พัฒนาขึ้นโดยใคร?",
+                opts: ["Gulick & Urwick", "W. Edwards Deming", "Frederick Taylor", "Henri Fayol"],
+                ans: 1, exp: "ถูกต้อง! วงจร PDCA มักเรียกว่า Deming Cycle (วงจรเดมิ่ง)"
+            },
+            {
+                q: "ขั้นตอนใดใน PDCA ที่นำผลการประเมินมาปรับปรุงแก้ไขให้ดีขึ้น?",
+                opts: ["Plan", "Do", "Check", "Act"],
+                ans: 3, exp: "ถูกต้อง! Act (A) คือการนำผลจากข้อบกพร่องมาปรับปรุงแก้ไข หรือจัดทำเป็นมาตรฐานใหม่"
+            },
+            {
+                q: "หัวข้อวิจัย 'การพัฒนากระบวนการนิเทศภายในโดยประยุกต์ใช้วงจรคุณภาพเดมิ่ง' หมายถึงการใช้แนวคิดใดเป็นกรอบในการวิจัย?",
+                opts: ["POSDCoRB", "System Theory", "PDCA", "4 Affairs"],
+                ans: 2, exp: "ถูกต้อง! วงจรคุณภาพเดมิ่ง คือวงจร PDCA"
+            },
+            {
+                q: "หากใช้ POSDCoRB เป็น 'ตัวแปรต้น' ข้อใดเหมาะสมที่จะเป็น 'ตัวแปรตาม' มากที่สุด?",
+                opts: ["เพศและอายุของผู้บริหาร", "งบประมาณของโรงเรียน", "ประสิทธิผลของสถานศึกษา", "ที่ตั้งของสถานศึกษา"],
+                ans: 2, exp: "ถูกต้อง! กระบวนการบริหาร (ตัวแปรต้น) ย่อมส่งผลต่อ ประสิทธิผล หรือผลสำเร็จของงาน (ตัวแปรตาม)"
+            },
+
+            // Part 4: โครงสร้าง 4 ฝ่าย (31-38)
+            {
+                q: "งานหลักที่เป็น 'หัวใจ' ของสถานศึกษา คือส่วนใดตามโครงสร้างการบริหาร 4 ฝ่าย?",
+                opts: ["Academic Affairs", "Business Affairs", "Student Affairs", "Supportive Affairs"],
+                ans: 0, exp: "ถูกต้อง! งานวิชาการ (Academic Affairs) เป็นภารกิจหลักและเป็นหัวใจสำคัญที่สุดของสถานศึกษา"
+            },
+            {
+                q: "งานด้านงบประมาณ การเงิน และงานสารบรรณ จัดอยู่ในฝ่ายใด?",
+                opts: ["Academic Affairs", "Business Affairs (งานบริหารทั่วไป/งบประมาณ)", "Student Affairs", "ไม่มีข้อถูก"],
+                ans: 1, exp: "ถูกต้อง! Business Affairs ครอบคลุมงานธุรการ งบประมาณ การเงิน"
+            },
+            {
+                q: "ระบบดูแลช่วยเหลือนักเรียน สภานักเรียน กิจกรรมพัฒนาผู้เรียน จัดอยู่ในฝ่ายใด?",
+                opts: ["Academic Affairs", "Business Affairs", "Student Affairs", "Supportive Affairs"],
+                ans: 2, exp: "ถูกต้อง! งานที่เกี่ยวกับตัวผู้เรียนโดยตรงนอกเหนือจากการสอน คือ กิจการนักเรียน (Student Affairs)"
+            },
+            {
+                q: "งานอาคารสถานที่ ภารโรง และรถโรงเรียน จัดอยู่ในส่วนใด?",
+                opts: ["Academic Affairs", "Business Affairs", "Student Affairs", "Supportive Affairs (ฝ่ายสนับสนุน)"],
+                ans: 3, exp: "ถูกต้อง! Supportive Affairs คือฝ่ายสนับสนุน งานอาคารสถานที่ สิ่งแวดล้อม"
+            },
+            {
+                q: "หากวิจัยเรื่อง 'ความพึงพอใจของครูที่มีต่อการจัดภูมิทัศน์ของโรงเรียน' เกี่ยวข้องกับฝ่ายใดมากที่สุด?",
+                opts: ["Academic Affairs", "Student Affairs", "Supportive Affairs", "Business Affairs"],
+                ans: 2, exp: "ถูกต้อง! การจัดภูมิทัศน์ อาคารสถานที่ เป็นงาน Supportive Affairs"
+            },
+            {
+                q: "การวิจัยเรื่อง 'รูปแบบการบริหารเพื่อยกระดับผลสัมฤทธิ์ทางการเรียนO-NET' เกี่ยวข้องกับฝ่ายใดโดยตรง?",
+                opts: ["Academic Affairs", "Business Affairs", "Student Affairs", "Supportive Affairs"],
+                ans: 0, exp: "ถูกต้อง! ผลสัมฤทธิ์ O-NET เป็นเรื่องของการจัดการเรียนการสอน (Academic Affairs)"
+            },
+            {
+                q: "การวิจัยเกี่ยวกับการแก้ปัญหาเด็กติดยาเสพติดในโรงเรียน จัดอยู่ในกรอบงานบริหารฝ่ายใด?",
+                opts: ["Academic Affairs", "Student Affairs", "Business Affairs", "Supportive Affairs"],
+                ans: 1, exp: "ถูกต้อง! ปัญหาพฤติกรรม ระบบดูแลช่วยเหลือ จัดอยู่ในงานกิจการนักเรียน (Student Affairs)"
+            },
+            {
+                q: "ทฤษฎีใดที่มุ่งศึกษาพฤติกรรมและอิทธิพลของผู้บริหารที่มีต่อผู้ตาม?",
+                opts: ["System Theory", "POSDCoRB", "Leadership Theory (ภาวะผู้นำ)", "PDCA"],
+                ans: 2, exp: "ถูกต้อง! แนวคิดปฏิสัมพันธ์ของภาวะผู้นำ (Leadership) โฟกัสที่อิทธิพลระหว่างผู้นำและผู้ตาม"
+            },
+
+            // Part 5: วัตถุประสงค์และภาพรวม (39-50)
+            {
+                q: "ข้อใดคือลักษณะของ 'วัตถุประสงค์ทั่วไป' (General Objective) ของการวิจัย?",
+                opts: ["เขียนแยกเป็นข้อย่อยๆ 3-4 ข้อ", "บอกความมุ่งหวังกว้างๆ เพียงประโยคเดียว มักล้อจากชื่อเรื่อง", "ต้องระบุสถิติที่จะใช้เสมอ", "เป็นการบอกข้อเสนอแนะในการวิจัย"],
+                ans: 1, exp: "ถูกต้อง! วัตถุประสงค์ทั่วไป จะบอกความมุ่งหวังหลักในภาพรวม เพียง 1 ประโยค"
+            },
+            {
+                q: "ถ้าชื่อเรื่องคือ 'การบริหารงานวิชาการของโรงเรียน' วัตถุประสงค์ทั่วไปคือข้อใด?",
+                opts: ["เพื่อเสนอแนะแนวทางแก้ปัญหาทิ้งขยะ", "เพื่อศึกษาการบริหารงานวิชาการของโรงเรียน", "เพื่อเปรียบเทียบเพศของผู้บริหาร", "เพื่อหางบประมาณมาสนับสนุนงานวิชาการ"],
+                ans: 1, exp: "ถูกต้อง! วัตถุประสงค์ทั่วไปได้มาจากการเติมคำว่า 'เพื่อศึกษา...' หน้าชื่อเรื่อง"
+            },
+            {
+                q: "'เพื่อเปรียบเทียบระดับความพึงพอใจของครู จำแนกตามประสบการณ์ทำงาน' ประโยคนี้คืออะไร?",
+                opts: ["วัตถุประสงค์ทั่วไป", "วัตถุประสงค์เฉพาะ", "สมมติฐานการวิจัย", "นิยามศัพท์เฉพาะ"],
+                ans: 1, exp: "ถูกต้อง! เป็นวัตถุประสงค์เฉพาะ ที่ระบุประเด็นย่อยในการศึกษาหรือเปรียบเทียบ"
+            },
+            {
+                q: "ข้อใดไม่ใช่ลักษณะของชื่อเรื่องการวิจัยที่ดี?",
+                opts: ["กะทัดรัด ชัดเจน", "ครอบคลุมเนื้อหาที่จะทำ", "ใช้ภาษากำกวมเพื่อให้ผู้อ่านคิดตาม", "สะท้อนให้เห็นวัตถุประสงค์ของการวิจัย"],
+                ans: 2, exp: "ถูกต้อง! ชื่อเรื่องการวิจัยต้องชัดเจน ไม่กำกวม ตีความได้ตรงกัน"
+            },
+            {
+                q: "เครื่องมือวิจัยชนิดใด นิยมใช้มากที่สุดในการวิจัยเชิงสำรวจ (Survey Research) ด้านการบริหาร?",
+                opts: ["กล้องจุลทรรศน์", "แบบทดสอบวัดผลสัมฤทธิ์", "แบบสอบถามมาตราส่วนประมาณค่า (Rating Scale)", "การจัดกลุ่มสนทนา (Focus Group)"],
+                ans: 2, exp: "ถูกต้อง! แบบสอบถาม Rating Scale (เช่น 5 ระดับของ Likert) นิยมใช้มากที่สุดในการเก็บข้อมูลทัศนคติ/ความพึงพอใจ"
+            },
+            {
+                q: "ถ้าอาจารย์ผู้สอนวัย 80 ปี ตรวจข้อสอบ ท่านมักจะให้ความสำคัญกับเรื่องใดในการออกแบบการวิจัย?",
+                opts: ["การใช้ App ทันสมัยในการเก็บข้อมูล", "การอ้างอิงทฤษฎีพื้นฐานอย่างถูกต้อง เช่น POSDCoRB หรือ System Theory", "ความยาวของรูปเล่มวิจัย", "การใช้ศัพท์วัยรุ่นในงานวิจัย"],
+                ans: 1, exp: "ถูกต้อง! นักวิชาการรุ่นอาวุโสมักเน้นความแม่นยำของทฤษฎี รากฐานทางวิชาการ และกรอบแนวคิดที่เป็นระบบ (Systematic)"
+            },
+            {
+                q: "สำหรับอาจารย์วัย 40 ปี ท่านอาจเน้นเรื่องใดเป็นพิเศษในการสอบ?",
+                opts: ["ให้ท่องจำปี ค.ศ. ที่เกิดทฤษฎี", "การคัดลายมือ", "การประยุกต์ใช้วิธีวิจัยเพื่อแก้ปัญหาจริงในสถานศึกษา (Practicality)", "ห้ามใช้วิจัยเชิงคุณภาพเด็ดขาด"],
+                ans: 2, exp: "ถูกต้อง! คนรุ่นใหม่มักเน้นการประยุกต์ใช้ (Applied) การแก้ปัญหาแบบ Action Research หรือ Case Study ในบริบทปัจจุบัน"
+            },
+            {
+                q: "ตัวแปรใด มักถูกกำหนดให้เป็น 'ตัวแปรต้น (Independent Variable)' ในการวิจัยด้านการบริหาร?",
+                opts: ["ความพึงพอใจในการทำงาน", "ผลสัมฤทธิ์ทางการเรียน", "ประสิทธิผลของโรงเรียน", "ภาวะผู้นำของผู้บริหาร"],
+                ans: 3, exp: "ถูกต้อง! ภาวะผู้นำ (ตัวแปรต้น) เป็นเหตุที่ส่งผลให้เกิดผลลัพธ์ต่างๆ ตามมา (ตัวแปรตาม)"
+            },
+            {
+                q: "ตัวแปรใด มักเป็น 'ตัวแปรตาม (Dependent Variable)'?",
+                opts: ["เพศของผู้ตอบแบบสอบถาม", "ขนาดของโรงเรียน", "ระดับการศึกษาของครู", "คุณภาพของผู้เรียน"],
+                ans: 3, exp: "ถูกต้อง! คุณภาพผู้เรียนเป็น 'ผลลัพธ์' ที่ตามมา จึงมักเป็นตัวแปรตาม"
+            },
+            {
+                q: "การตั้งสมมติฐานการวิจัย (Hypothesis) คือการทำสิ่งใด?",
+                opts: ["คาดเดาคำตอบล่วงหน้าอย่างมีเหตุผลและหลักการรองรับ", "สรุปผลการวิจัย", "เก็บรวบรวมข้อมูล", "เขียนอ้างอิงบรรณานุกรม"],
+                ans: 0, exp: "ถูกต้อง! สมมติฐานคือการคาดคะเนคำตอบล่วงหน้าบนฐานของทฤษฎี"
+            },
+            {
+                q: "ข้อใดคือการวิจัยแบบ Mixed Methods?",
+                opts: ["วิจัยประวัติศาสตร์ + วิจัยอนาคต", "การใช้วิธีการวิจัยเชิงปริมาณร่วมกับการวิจัยเชิงคุณภาพในเรื่องเดียวกัน", "ทำวิจัย 2 เรื่องพร้อมกัน", "ทดลองซ้ำ 2 ครั้ง"],
+                ans: 1, exp: "ถูกต้อง! Mixed Methods คือการผสมผสาน เชิงปริมาณ (ตัวเลข) และ เชิงคุณภาพ (คำบรรยาย/สัมภาษณ์)"
+            },
+            {
+                q: "ท้ายที่สุด เป้าหมายสูงสุดของการทำวิจัยทางการบริหารการศึกษาคืออะไร?",
+                opts: ["เพื่อให้ผู้บริหารได้เลื่อนวิทยฐานะ", "เพื่อพัฒนาองค์ความรู้และนำผลไปปรับปรุงคุณภาพการจัดการศึกษา", "เพื่อให้ได้งบประมาณเพิ่ม", "เพื่อให้โรงเรียนมีชื่อเสียงในหน้าหนังสือพิมพ์"],
+                ans: 1, exp: "ถูกต้อง! เป้าหมายที่แท้จริงคือการนำผลไปใช้แก้ปัญหาและพัฒนาการศึกษาให้ดีขึ้น"
+            }
+        ];
+
+        const essayData = [
+            {
+                q: "จงอธิบายความหมายของ 'ระบบการบริหาร' ตามแนวคิด System Theory พร้อมยกตัวอย่างปัจจัยนำเข้า (Input) กระบวนการ (Process) และผลผลิต (Output) ในบริบทของสถานศึกษามาอย่างชัดเจน (เก็งข้อสอบอิงอาจารย์ท่านที่ 1)",
+                hint: "แนวการตอบ: อธิบายว่าระบบคือความสัมพันธ์ของส่วนต่างๆ\n- Input: บุคลากร, งบประมาณ, สื่อ, อาคาร\n- Process: การสอนของครู, การบริหารของ ผอ., การนิเทศ\n- Output: เกรดนักเรียน, คุณลักษณะอันพึงประสงค์, ความพึงพอใจ"
+            },
+            {
+                q: "หากท่านเป็นผู้อำนวยการโรงเรียนและพบปัญหา 'นักเรียนมีพฤติกรรมหนีเรียนจำนวนมาก' ท่านจะเลือกใช้การวิจัยประเภทใดในการแก้ปัญหา และจะประยุกต์ใช้วงจร PDCA ในการออกแบบการวิจัยอย่างไร? (เก็งข้อสอบอิงอาจารย์ท่านที่ 2)",
+                hint: "แนวการตอบ: เลือกใช้ Action Research (วิจัยปฏิบัติการ)\n- P: วางแผนสำรวจสาเหตุและสร้างโครงการแก้ไข\n- D: นำโครงการ/มาตรการไปปฏิบัติ\n- C: ประเมินผลว่าเด็กหนีเรียนลดลงไหม\n- A: สรุปผล ถอดบทเรียนเพื่อทำเป็นมาตรฐานโรงเรียน"
+            },
+            {
+                q: "จงยกตัวอย่างการตั้งชื่อเรื่องการวิจัยที่ครอบคลุม 'การบริหารงานวิชาการ' (Academic Affairs) มา 1 เรื่อง พร้อมทั้งเขียน วัตถุประสงค์ทั่วไป และ วัตถุประสงค์เฉพาะ มาให้สอดคล้องกัน",
+                hint: "แนวการตอบ:\nชื่อเรื่อง: สภาพและปัญหาการบริหารงานวิชาการของโรงเรียน...\nวัตถุประสงค์ทั่วไป: เพื่อศึกษาสภาพและปัญหาการบริหารงานวิชาการ...\nวัตถุประสงค์เฉพาะ: 1) เพื่อศึกษาสภาพ... 2) เพื่อเปรียบเทียบสภาพ...จำแนกตามประสบการณ์ครู"
+            },
+            {
+                q: "หลักการ POSDCoRB มีความสำคัญอย่างไรต่อการวิจัยทางการบริหารการศึกษา ท่านสามารถนำหลักการนี้ไปใช้กำหนดเป็น 'กรอบแนวคิดในการวิจัย' ได้อย่างไร จงอธิบาย",
+                hint: "แนวการตอบ: อธิบายความหมาย P-O-S-D-Co-R-B ทีละตัว และบอกว่าสามารถนำมาตั้งเป็น 'ตัวแปรต้น' เพื่อไปวัดผลกระทบที่มีต่อ 'ตัวแปรตาม' (เช่น ประสิทธิผลการบริหาร) ใน Conceptual Framework"
+            },
+            {
+                q: "เปรียบเทียบความแตกต่างระหว่าง การวิจัยเชิงปริมาณ (Quantitative) และ การวิจัยเชิงคุณภาพ (Qualitative) ว่าเหมาะสมกับบริบทการแก้ปัญหาในสถานศึกษาต่างกันอย่างไร?",
+                hint: "แนวการตอบ:\n- ปริมาณ: เน้นตัวเลข, กลุ่มใหญ่, ใช้แบบสอบถาม, เหมาะกับการประเมินภาพรวมความพึงพอใจ\n- คุณภาพ: เน้นคำบรรยาย, สัมภาษณ์เจาะลึก, เหมาะกับปัญหาเฉพาะจุดที่ต้องการรู้ 'ทำไม' และ 'อย่างไร' อย่างลึกซึ้ง (เช่น วัฒนธรรมองค์กร)"
+            }
+        ];
+
+        // Tab Switching Logic
+        function switchTab(tabId) {
+            const reviewTab = document.getElementById('btn-tab-review');
+            const quizTab = document.getElementById('btn-tab-quiz');
+            const reviewSec = document.getElementById('section-review');
+            const quizSec = document.getElementById('section-quiz');
+
+            if (tabId === 'review') {
+                reviewTab.className = "tab-active pb-3 px-2 text-lg transition-colors duration-200";
+                quizTab.className = "tab-inactive pb-3 px-2 text-lg transition-colors duration-200";
+                reviewSec.classList.remove('hidden');
+                quizSec.classList.add('hidden');
+            } else {
+                quizTab.className = "tab-active pb-3 px-2 text-lg transition-colors duration-200";
+                reviewTab.className = "tab-inactive pb-3 px-2 text-lg transition-colors duration-200";
+                quizSec.classList.remove('hidden');
+                reviewSec.classList.add('hidden');
+            }
+        }
+
+        // Render Review Content
+        function renderReview() {
+            const container = document.getElementById('research-types-container');
+            let html = '<ul class="list-disc pl-5 space-y-1">';
+            researchTypes.forEach(type => {
+                html += `<li>${type}</li>`;
+            });
+            html += '</ul>';
+            container.innerHTML = html;
+        }
+
+        // Render MCQs
+        function renderMCQs() {
+            const container = document.getElementById('mcq-container');
+            container.innerHTML = ''; // Clear
+
+            mcqData.forEach((item, index) => {
+                const qDiv = document.createElement('div');
+                qDiv.className = "bg-white p-6 rounded-xl shadow-sm border border-gray-200";
+                
+                let optionsHtml = '';
+                item.opts.forEach((opt, optIdx) => {
+                    optionsHtml += `
+                        <button id="q${index}-opt${optIdx}" 
+                                class="w-full text-left p-3 mt-2 rounded-lg border border-gray-300 hover:bg-blue-50 transition-colors"
+                                onclick="checkAnswer(${index}, ${optIdx}, ${item.ans})">
+                            ${optIdx + 1}. ${opt}
+                        </button>
+                    `;
+                });
+
+                qDiv.innerHTML = `
+                    <h3 class="text-lg font-semibold text-gray-800 mb-2">ข้อ ${index + 1}: ${item.q}</h3>
+                    <div class="options-container space-y-2">
+                        ${optionsHtml}
+                    </div>
+                    <div id="q${index}-feedback" class="mt-4 hidden p-4 rounded-lg text-sm font-medium"></div>
+                `;
+                container.appendChild(qDiv);
+            });
+        }
+
+        // Handle MCQ Click
+        window.checkAnswer = function(qIndex, selectedIdx, correctIdx) {
+            // Disable all buttons in this question
+            const item = mcqData[qIndex];
+            item.opts.forEach((_, idx) => {
+                const btn = document.getElementById(`q${qIndex}-opt${idx}`);
+                btn.disabled = true;
+                btn.classList.remove('hover:bg-blue-50', 'cursor-pointer');
+                
+                // Style correct and incorrect
+                if (idx === correctIdx) {
+                    btn.classList.add('bg-green-100', 'border-green-500', 'text-green-800', 'font-bold');
+                } else if (idx === selectedIdx && selectedIdx !== correctIdx) {
+                    btn.classList.add('bg-red-100', 'border-red-500', 'text-red-800');
+                } else {
+                    btn.classList.add('opacity-50');
+                }
+            });
+
+            // Show feedback
+            const feedbackDiv = document.getElementById(`q${qIndex}-feedback`);
+            feedbackDiv.classList.remove('hidden');
+            
+            if (selectedIdx === correctIdx) {
+                feedbackDiv.classList.add('bg-green-50', 'text-green-800', 'border', 'border-green-200');
+                feedbackDiv.innerHTML = `<i class="fas fa-check-circle mr-2"></i><strong>ถูกต้อง!</strong> ${item.exp}`;
+            } else {
+                feedbackDiv.classList.add('bg-red-50', 'text-red-800', 'border', 'border-red-200');
+                feedbackDiv.innerHTML = `<i class="fas fa-times-circle mr-2"></i><strong>ผิดครับ!</strong> ${item.exp}`;
+            }
+        };
+
+        // Render Essays
+        function renderEssays() {
+            const container = document.getElementById('essay-container');
+            container.innerHTML = '';
+
+            essayData.forEach((item, index) => {
+                const eDiv = document.createElement('div');
+                eDiv.className = "bg-white p-6 rounded-xl shadow-sm border border-gray-200";
+                
+                eDiv.innerHTML = `
+                    <h3 class="text-lg font-semibold text-primary mb-3">ข้อที่ ${index + 1}: ${item.q}</h3>
+                    <textarea class="w-full border border-gray-300 rounded-lg p-3 text-gray-700 h-32 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="ฝึกพิมพ์คำตอบของคุณที่นี่..."></textarea>
+                    <button onclick="toggleHint(${index})" class="mt-3 bg-secondary text-white px-4 py-2 rounded shadow hover:bg-blue-800 transition-colors">
+                        <i class="fas fa-lightbulb mr-2"></i>ดูแนวการตอบ
+                    </button>
+                    <div id="essay-hint-${index}" class="hidden mt-4 bg-gray-50 p-4 border-l-4 border-accent rounded text-gray-700 whitespace-pre-line text-sm">
+                        ${item.hint}
+                    </div>
+                `;
+                container.appendChild(eDiv);
+            });
+        }
+
+        // Toggle Essay Hint
+        window.toggleHint = function(index) {
+            const hintDiv = document.getElementById(`essay-hint-${index}`);
+            if (hintDiv.classList.contains('hidden')) {
+                hintDiv.classList.remove('hidden');
+                hintDiv.classList.add('fade-in');
+            } else {
+                hintDiv.classList.add('hidden');
+            }
+        };
+
+        // Initialize App
+        window.onload = function() {
+            renderReview();
+            renderMCQs();
+            renderEssays();
+        };
+    </script>
+</body>
+</html>
